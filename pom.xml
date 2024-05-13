@@ -14,6 +14,8 @@
 	<name>gamestore</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<checkstyle-config-dir>checkstyle</checkstyle-config-dir>
+		<checkstyle-maven-plugin.version>3.3.1</checkstyle-maven-plugin.version>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -66,7 +68,29 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-maven-plugin.version}</version>
+				<configuration>
+					<configLocation>${checkstyle-config-dir}/checkstyle.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<violationSeverity>warning</violationSeverity>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>
