@@ -5,11 +5,11 @@ import com.example.gamestore.model.request.LoginRequest;
 import com.example.gamestore.model.request.RegisterRequest;
 import com.example.gamestore.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@Setter
+@AllArgsConstructor
 public class AuthenticationService {
     private UserRepository userRepository;
 
