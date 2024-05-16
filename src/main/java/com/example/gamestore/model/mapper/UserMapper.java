@@ -12,5 +12,6 @@ public interface UserMapper {
         user.setPassword(registerRequest.getPassword());
         user.setRole(User.Role.USER);
         user.setGameLibrary(new ArrayList<>());
+        return user;
     }
 }
