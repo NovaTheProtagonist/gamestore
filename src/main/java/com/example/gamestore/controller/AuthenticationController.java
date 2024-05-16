@@ -22,20 +22,22 @@ public class AuthenticationController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest registerRequest) {
+        User user = authenticationService.handleRegister(registerRequest);
         LoginResponse loginResponse = LoginResponse.builder()
-                .userId(0L)
-                .role(User.Role.USER.name())
-                .username("")
+                .userId(user.getId())
+                .role(user.getRole().name())
+                .username(user.getUsername())
                 .build();
         return ResponseEntity.ok().body(loginResponse);
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        User user = authenticationService.handleLogin(loginRequest);
         LoginResponse loginResponse = LoginResponse.builder()
-                .userId(0L)
-                .role(User.Role.USER.name())
-                .username("")
+                .userId(user.getId())
+                .role(user.getRole().name())
+                .username(user.getUsername())
                 .build();
         return ResponseEntity.ok().body(loginResponse);
     }

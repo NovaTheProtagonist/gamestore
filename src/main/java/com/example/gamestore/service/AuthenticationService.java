@@ -1,6 +1,7 @@
 package com.example.gamestore.service;
 
 import com.example.gamestore.entity.User;
+import com.example.gamestore.model.mapper.UserMapper;
 import com.example.gamestore.model.request.LoginRequest;
 import com.example.gamestore.model.request.RegisterRequest;
 import com.example.gamestore.repository.UserRepository;
@@ -13,12 +14,13 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
     private UserRepository userRepository;
 
-    public void handleRegister(RegisterRequest registerRequest) {
-
+    public User handleRegister(RegisterRequest registerRequest) {
+        User user = UserMapper.mapRegisterRequestToUser(registerRequest);
+        return userRepository.save(user);
     }
 
-    public void handleLogin(LoginRequest loginRequest) {
-
+    public User handleLogin(LoginRequest loginRequest) {
+        return userRepository.findUserByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
     }
 
     public void handleLogout(Long userId) {
