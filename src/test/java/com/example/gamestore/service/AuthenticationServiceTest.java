@@ -46,13 +46,15 @@ class AuthenticationServiceTest {
                 .username(expecteduser.getUsername())
                 .password(expecteduser.getPassword())
                 .build();
-        Mockito.when(userRepository.findUserByUsernameAndPassword(expecteduser.getUsername(), expecteduser.getPassword()))
+        Mockito.when(userRepository.findUserByUsername(expecteduser.getUsername()))
+                .thenReturn(Optional.of((expecteduser)));
+        Mockito.when(userRepository.findById(expecteduser.getId()))
                 .thenReturn(Optional.of((expecteduser)));
         //when
         User user = authenticationService.handleLogin(loginRequest);
         //then
         Mockito.verify(userRepository, Mockito.times(1))
-                .findUserByUsernameAndPassword(expecteduser.getUsername(), expecteduser.getPassword());
+                .findUserByUsername(expecteduser.getUsername());
         assertEquals(user.getStatus(),User.UserStatus.ONLINE);
         assertEquals(user.getUsername(), expecteduser.getUsername());
         assertEquals(user.getRole(), expecteduser.getRole());
