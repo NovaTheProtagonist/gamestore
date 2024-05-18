@@ -54,4 +54,6 @@ public class User {
     @ManyToMany
     @JoinTable(name = "game_library")
     private List<Game> gameLibrary;
+
+    private Float balance;
 }

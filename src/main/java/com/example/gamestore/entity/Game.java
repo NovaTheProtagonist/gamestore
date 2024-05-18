@@ -44,6 +44,8 @@ public class Game {
     @OneToMany
     private List<Review> reviews;
 
+    private Float price;
+
     public enum GameCategory {
         ACTION,
         ADVENTURE,
