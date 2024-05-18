@@ -1,10 +1,10 @@
 package com.example.gamestore.model.response;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 @Builder
-@Getter
+@Data
 public class LoginResponse {
     private Long userId;
     private String username;

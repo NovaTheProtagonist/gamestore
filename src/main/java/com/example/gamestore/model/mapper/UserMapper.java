@@ -1,9 +1,10 @@
 package com.example.gamestore.model.mapper;
 
+import java.util.ArrayList;
+
 import com.example.gamestore.entity.User;
 import com.example.gamestore.model.request.RegisterRequest;
 
-import java.util.ArrayList;
 
 public interface UserMapper {
     static User mapRegisterRequestToUser(RegisterRequest registerRequest) {

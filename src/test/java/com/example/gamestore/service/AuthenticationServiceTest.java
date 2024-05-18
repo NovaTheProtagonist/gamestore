@@ -1,6 +1,7 @@
 package com.example.gamestore.service;
 
 import com.example.gamestore.entity.User;
+import com.example.gamestore.model.request.LoginRequest;
 import com.example.gamestore.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,5 +32,31 @@ class AuthenticationServiceTest {
         //then
         Mockito.verify(userRepository, Mockito.times(1)).findById(userId);
         assertEquals(user.getStatus(),User.UserStatus.OFFLINE);
+    }
+
+    @Test
+    void handleLoginWillSetUserToOnlineWhenRequestIsValid() {
+        //given
+        User expecteduser = new User();
+        expecteduser.setId(1L);
+        expecteduser.setStatus(User.UserStatus.OFFLINE);
+        expecteduser.setUsername("gizel");
+        expecteduser.setPassword("1q2w3e");
+        LoginRequest loginRequest = LoginRequest.builder()
+                .username(expecteduser.getUsername())
+                .password(expecteduser.getPassword())
+                .build();
+        Mockito.when(userRepository.findUserByUsernameAndPassword(expecteduser.getUsername(), expecteduser.getPassword()))
+                .thenReturn(Optional.of((expecteduser)));
+        //when
+        User user = authenticationService.handleLogin(loginRequest);
+        //then
+        Mockito.verify(userRepository, Mockito.times(1))
+                .findUserByUsernameAndPassword(expecteduser.getUsername(), expecteduser.getPassword());
+        assertEquals(user.getStatus(),User.UserStatus.ONLINE);
+        assertEquals(user.getUsername(), expecteduser.getUsername());
+        assertEquals(user.getRole(), expecteduser.getRole());
+        assertEquals(user.getPassword(), expecteduser.getPassword());
+        assertEquals(user.getGameLibrary(), expecteduser.getGameLibrary());
     }
 }
