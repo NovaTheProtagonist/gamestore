@@ -38,6 +38,7 @@ public class CheckoutService {
 
     @Transactional
     private void addGameToUser(User user, Game game) {
+        user.setBalance(user.getBalance() - game.getPrice());
         ArrayList<Game> newLibrary = new ArrayList<>(user.getGameLibrary());
         newLibrary.add(game);
         user.setGameLibrary(newLibrary);
