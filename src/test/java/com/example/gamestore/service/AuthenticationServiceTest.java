@@ -1,7 +1,11 @@
 package com.example.gamestore.service;
 
 import com.example.gamestore.entity.User;
+import com.example.gamestore.exception.IncorrectPasswordException;
+import com.example.gamestore.exception.UserNotFoundException;
+import com.example.gamestore.exception.UsernameTakenException;
 import com.example.gamestore.model.request.LoginRequest;
+import com.example.gamestore.model.request.RegisterRequest;
 import com.example.gamestore.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,5 +64,67 @@ class AuthenticationServiceTest {
         assertEquals(user.getRole(), expecteduser.getRole());
         assertEquals(user.getPassword(), expecteduser.getPassword());
         assertEquals(user.getGameLibrary(), expecteduser.getGameLibrary());
+    }
+
+    @Test
+    void handleRegisterWillCreateNewUserAndLogThemIn() {
+        //given
+        User expecteduser = new User();
+        expecteduser.setId(1L);
+        expecteduser.setStatus(User.UserStatus.ONLINE);
+        expecteduser.setUsername("gizel");
+        expecteduser.setPassword("1q2w3e");
+        RegisterRequest registerRequest = RegisterRequest.builder()
+                .username(expecteduser.getUsername())
+                .password(expecteduser.getPassword())
+                .build();
+        Mockito.when(userRepository.findUserByUsername(expecteduser.getUsername()))
+                .thenReturn(Optional.empty());
+        Mockito.when(userRepository.save(Mockito.any()))
+                .thenReturn(expecteduser);
+        //when
+        User user = authenticationService.handleRegister(registerRequest);
+        //then
+        Mockito.verify(userRepository, Mockito.times(1))
+                .findUserByUsername(expecteduser.getUsername());
+        Mockito.verify(userRepository, Mockito.times(1))
+                .save(Mockito.any());
+        assertEquals(user.getStatus(),User.UserStatus.ONLINE);
+        assertEquals(user.getUsername(), expecteduser.getUsername());
+        assertEquals(user.getRole(), expecteduser.getRole());
+        assertEquals(user.getPassword(), expecteduser.getPassword());
+        assertEquals(user.getGameLibrary(), expecteduser.getGameLibrary());
+    }
+
+    @Test
+    void handleRegisterWillThrowExceptionWhenUsernameIsTaken() {
+        //given
+        RegisterRequest registerRequest = RegisterRequest.builder().username("kesudio").password("sa12").build();
+        User user = new User();
+        user.setUsername(registerRequest.getUsername());
+        Mockito.when(userRepository.findUserByUsername(registerRequest.getUsername()))
+                .thenReturn(Optional.of(user));
+        assertThrows(UsernameTakenException.class, ()->authenticationService.handleRegister(registerRequest));
+    }
+
+    @Test
+    void handleLoginWillThrowExceptionWhenUserDoesNotExist() {
+        //given
+        LoginRequest loginRequest = LoginRequest.builder().username("kesudio").password("sa12").build();
+        Mockito.when(userRepository.findUserByUsername(loginRequest.getUsername()))
+                .thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, ()->authenticationService.handleLogin(loginRequest));
+    }
+
+    @Test
+    void handleLoginWillThrowExceptionWhenPasswordIsIncorrect() {
+        //given
+        LoginRequest loginRequest = LoginRequest.builder().username("kesudio").password("sa12").build();
+        User user = new User();
+        user.setUsername(loginRequest.getUsername());
+        user.setPassword("sa13");
+        Mockito.when(userRepository.findUserByUsername(loginRequest.getUsername()))
+                .thenReturn(Optional.of(user));
+        assertThrows(IncorrectPasswordException.class, ()->authenticationService.handleLogin(loginRequest));
     }
 }
