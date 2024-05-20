@@ -18,6 +18,7 @@ public class InitUsers implements CommandLineRunner {
         user.setUsername("test");
         user.setPassword("test");
         user.setRole(User.Role.USER);
+        user.setBalance(0f);
         userRepository.save(user);
     }
 
@@ -27,6 +28,7 @@ public class InitUsers implements CommandLineRunner {
         user.setUsername("admin");
         user.setPassword("admin");
         user.setRole(User.Role.ADMIN);
+        user.setBalance(0f);
         userRepository.save(user);
     }
 
