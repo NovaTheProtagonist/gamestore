@@ -3,12 +3,12 @@ package com.example.gamestore.h2config;
 import com.example.gamestore.entity.User;
 import com.example.gamestore.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class InitUsers implements CommandLineRunner {
     private UserRepository userRepository;
 

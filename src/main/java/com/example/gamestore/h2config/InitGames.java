@@ -5,12 +5,12 @@ import java.util.List;
 import com.example.gamestore.entity.Game;
 import com.example.gamestore.repository.GameRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class InitGames implements CommandLineRunner {
 
     private GameRepository gameRepository;
