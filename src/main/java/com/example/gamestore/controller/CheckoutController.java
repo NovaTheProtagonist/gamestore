@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class CheckoutController {
     private CheckoutService checkoutService;
+
     @PostMapping(value = "/deposit")
     public ResponseEntity<DepositResponse> deposit(@RequestBody DepositRequest depositRequest) {
         Float newBalance = checkoutService.deposit(depositRequest.getUserId(), depositRequest.getAmount());
         DepositResponse response = DepositResponse.builder().newBalance(newBalance).build();
         return ResponseEntity.ok().body(response);
     }
+
     @PostMapping(value = "/buy")
     public ResponseEntity<Void> buyGame(@RequestBody BuyGameRequest buyGameRequest) {
         checkoutService.buyGame(buyGameRequest.getUserId(), buyGameRequest.getGameId());
