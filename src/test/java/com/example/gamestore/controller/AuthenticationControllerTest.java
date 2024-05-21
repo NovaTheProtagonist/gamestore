@@ -3,9 +3,7 @@ package com.example.gamestore.controller;
 import com.example.gamestore.entity.User;
 import com.example.gamestore.model.request.LoginRequest;
 import com.example.gamestore.model.response.LoginResponse;
-import com.example.gamestore.repository.UserRepository;
 import com.example.gamestore.service.AuthenticationService;
-import org.h2.command.dml.MergeUsing;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,9 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class AuthenticationControllerTest {
