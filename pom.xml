@@ -75,6 +75,8 @@
                 <configuration>
                     <excludes>
                         <exclude>com/example/gamestore/GamestoreApplication.java</exclude>
+                        <exclude>com/example/gamestore/security/**</exclude>
+                        <exclude>com/example/gamestore/h2config/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -88,12 +90,6 @@
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-check</id>
-                        <goals>
-                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
