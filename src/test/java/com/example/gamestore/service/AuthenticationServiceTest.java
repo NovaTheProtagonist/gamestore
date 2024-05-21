@@ -74,6 +74,7 @@ class AuthenticationServiceTest {
         expecteduser.setStatus(User.UserStatus.ONLINE);
         expecteduser.setUsername("gizel");
         expecteduser.setPassword("1q2w3e");
+        expecteduser.setBalance(0.0f);
         RegisterRequest registerRequest = RegisterRequest.builder()
                 .username(expecteduser.getUsername())
                 .password(expecteduser.getPassword())

@@ -19,6 +19,7 @@ class UserMapperTest {
         expectedUser.setGameLibrary(new ArrayList<>());
         expectedUser.setUsername(registerRequest.getUsername());
         expectedUser.setPassword(registerRequest.getPassword());
+        expectedUser.setBalance(0.0f);
         //when
         User actualUser = UserMapper.mapRegisterRequestToUser(registerRequest);
         //then
