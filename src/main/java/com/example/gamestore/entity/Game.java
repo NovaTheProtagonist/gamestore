@@ -12,7 +12,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -39,10 +38,6 @@ public class Game {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = GameCategory.class, fetch = FetchType.EAGER)
     private List<GameCategory> gameCategories;
-    @OneToMany
-    private List<Achievement> achievements;
-    @OneToMany
-    private List<Review> reviews;
 
     private Float price;
 
